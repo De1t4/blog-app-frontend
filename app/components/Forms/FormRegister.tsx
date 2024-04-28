@@ -11,17 +11,17 @@ const FormRegister = ({closeModal, changeForm}) => {
     </p>
     <form>
       <div className="grid grid-cols-2 gap-5">
-        <Input type={"text"} name={"name"} info={"Ingresar Nombre"} label={"Nombre:"}/>
-        <Input type={"text"} name={"lastname"} info={"Ingresar Apellido"} label={"Apellido:"}/>
+        <Input type={"text"} name={"name"} info={"Ingresar Nombre"} label={"Nombre:"} fetchData={undefined}/>
+        <Input type={"text"} name={"lastname"} info={"Ingresar Apellido"} label={"Apellido:"} fetchData={undefined}/>
       </div>
       <div className="mt-2">
-      <Input type={"email"} info={"Ingresar Email"} name={"email"} label={"Email:"}/>
+        <Input type={"email"} info={"Ingresar Email"} name={"email"} label={"Email:"} fetchData={undefined}/>
       </div>
       <div className="mt-2">
-      <Input type={"password"} info={"************"} name={"password"} label={"Contraseña:"}/>
+        <Input type={"password"} info={"************"} name={"password"} label={"Contraseña:"} fetchData={undefined}/>
       </div>
       <div className="mt-2">
-      <Input type={"password"} info={"************"} name={"passwordRepeat"} label={"Repetir Contraseña"}/>
+        <Input type={"password"} info={"************"} name={"passwordRepeat"} label={"Repetir Contraseña"} fetchData={undefined}/>
       </div>
       <div className="mt-2">
         <button className="w-full bg-[#F3BF3A] py-3 text-center text-black font-bold rounded-lg">Register Now</button>

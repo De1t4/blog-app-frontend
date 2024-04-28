@@ -37,7 +37,7 @@ export const CardsPost:React.FC<CardPostProps> = ({post, index, deleteComment}) 
               <ol>
                 {
                   post.comments.map((comment)=>(
-                    <CommentPost name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
+                    <CommentPost key={comment.idComment} name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
                   ))
                 }
               </ol>

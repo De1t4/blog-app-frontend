@@ -6,35 +6,35 @@ import { useEffect, useState } from "react";
 
 const API_REQUEST = "https://blog-app-backend-karg.onrender.com"
 
-export function fetchPostID(id:string | string[]){
-  const [dataPost, setDataPost] = useState<Posts>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(null);
-    setLoading(true)
-    useEffect(()=>{
-      fetch(`${API_REQUEST}/getPosts/${id}`)
-      .then((response) => response.json())
-      .then((data) => setDataPost(data.data))
-      .catch((error)=> setError(error))
-      .finally(() => setLoading(false))
-    },[id])
-  return {dataPost, loading, error}
-}
+// export function fetchPostID(id:string | string[]){
+//   const [dataPost, setDataPost] = useState<Posts>();
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState(null);
+//     setLoading(true)
+//     useEffect(()=>{
+//       fetch(`${API_REQUEST}/getPosts/${id}`)
+//       .then((response) => response.json())
+//       .then((data) => setDataPost(data.data))
+//       .catch((error)=> setError(error))
+//       .finally(() => setLoading(false))
+//     },[id])
+//   return {dataPost, loading, error}
+// }
 
-export function fetchPosts(){
-  const [data, setData] = useState<Posts[]>();
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(null);
-  useEffect(()=>{
-    setLoading(true)
-      axios.get(`${API_REQUEST}/getPosts`)
-      .then((response) => setData(response.data))
-      .catch((error)=> setError(error))
-      .finally(() => setLoading(false))
-  },[])
+// export function fetchPosts(){
+//   const [data, setData] = useState<Posts[]>();
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState(null);
+//   useEffect(()=>{
+//     setLoading(true)
+//       axios.get(`${API_REQUEST}/getPosts`)
+//       .then((response) => setData(response.data))
+//       .catch((error)=> setError(error))
+//       .finally(() => setLoading(false))
+//   },[])
 
-  return {data, loading, error}
-}
+//   return {data, loading, error}
+// }
 
 export const fetchPostSingle = async (id: number) =>{
   try{
