@@ -13,12 +13,14 @@ export interface Favorite {
   idLike?: number
 }
 
+const API_REQUEST = "https://blog-app-backend-karg.onrender.com"
+
 export default function Page() {
   const [postInfo, setPostInfo] = useState<Posts>()
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [favorite, setFavorite] = useState<Favorite>()
   const { authTokens, isLoggedIn } = useAuthContext()
-  const [uploadPost, setUploadPost] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true)
   const {id} = useParams()
 
   const closeModal = () =>{
@@ -33,14 +35,17 @@ export default function Page() {
   },[])
 
   const fetchDataPost = async () =>{
+    setLoading(true);
+
     try{
-      const res = await axios.get(`https://blog-app-backend-karg.onrender.com/getPosts/${id}`)
+      const res = await axios.get(`${API_REQUEST}/getPosts/${id}`)
       setPostInfo(res.data)
-      setUploadPost(false)
-      const resfav = await axios.get(`https://blog-app-backend-karg.onrender.com/favorite/${id}/${authTokens.idUser}`)
+      const resfav = await axios.get(`${API_REQUEST}/favorite/${id}/${authTokens.idUser}`)
       setFavorite(resfav.data)
-    }catch{
+    }catch(e:any){
       console.log("error")
+    }finally{
+      setLoading(false)
     }
   }
 
@@ -50,7 +55,7 @@ export default function Page() {
     }else{
       setFavorite({ fav: true })      
       try{
-        await axios.post(`https://blog-app-backend-karg.onrender.com/favorite`,{
+        await axios.post(`${API_REQUEST}/favorite`,{
           idPosts: id,
           UserId: authTokens.idUser
         })
@@ -63,10 +68,9 @@ export default function Page() {
 
   const removeFavorite = async () => {
     try{
-      await axios.delete(`https://blog-app-backend-karg.onrender.com/favoriteDelete/${authTokens.idUser}/${id}`)
+      await axios.delete(`${API_REQUEST}/favoriteDelete/${authTokens.idUser}/${id}`)
       toast.success("El post fue elimando de tus favoritos")
       setFavorite({ fav: false })      
-
     }catch{
       toast.warning("Error vuelva intentarlo")
     }
@@ -74,7 +78,7 @@ export default function Page() {
 
   const deletePost = async () =>{
     try{
-      await axios.delete(`https://blog-app-backend-karg.onrender.com/deletePost/${id}`)
+      await axios.delete(`${API_REQUEST}/deletePost/${id}`)
       toast.success("El post fue eliminado")
       window.location.replace("/")
     }catch{
@@ -84,7 +88,7 @@ export default function Page() {
   
   const deleteComment =  (idComment: number) =>{
     try{
-      axios.delete(`https://blog-app-backend-karg.onrender.com/deleteComment/${idComment}`)
+      axios.delete(`${API_REQUEST}/deleteComment/${idComment}`)
       toast.success("Comentario eliminado correctamente")
       const filteredComments = postInfo.comments.filter(comment => comment.idComment !== idComment);
       setPostInfo({...postInfo, comments: filteredComments})
@@ -95,12 +99,14 @@ export default function Page() {
   }
   const loadComment = () =>{
     fetchDataPost()
-    setUploadPost(false)
-
+    setLoading(false)
   }
   return (
-    <article className="border-[1px] m-auto  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 max-lg:w-full max-md:w-full transition-all duration-300 py-4 px-6 bg-slate-800 h-max w-[38rem] my-4 flex flex-col justify-between rounded-lg">
-      {uploadPost ? <BounceLoader className='m-auto' color='#379DFF'/>
+    <article className="border-[1px] m-auto  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 max-lg:w-full max-md:w-11/12 transition-all duration-300 py-4 px-6 bg-slate-800 h-max w-[38rem] my-4 flex flex-col justify-between rounded-lg">
+      {loading ? <div className="h-96 flex justify-center flex-col items-center">
+          <BounceLoader size={85} color='#379DFF'/>
+          <p className='mt-4 font-bold text-zinc-200'>Cargando Datos...</p>
+        </div>
       :<PostInfo loadComment={loadComment} postInfo={postInfo} favorite={favorite} authTokens={authTokens} openModal={openModal} isModalOpen={isModalOpen} addFavorite={addFavorite} removeFavorite={removeFavorite} deletePost={deletePost} closeModal={closeModal} idUser={Number(id)} deleteComment={deleteComment}/>
       }
     </article>

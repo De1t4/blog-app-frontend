@@ -1,5 +1,7 @@
 import type { Config } from 'tailwindcss'
 
+const colors = require('tailwindcss/colors')
+
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,9 +17,15 @@ const config: Config = {
       },
       borderColor:{
           doubleBorder:'border-image:linear-gradient(to right, #0a2170, #3182ce) border-image-slice:1;'
+      },
+      colors:{
+        'gold':"#F3BF3A"
       }
+  
     },
-  },
+
+  }
+  ,
   plugins: [
     require('tailwind-scrollbar'),
   ],

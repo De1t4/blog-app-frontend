@@ -23,7 +23,7 @@ export interface Comment {
 
 export interface DataCard  {
   name: string
-  loadComment: () => void
+  loadComment?: () => void
   datePosts: string
   type: string
   id: number

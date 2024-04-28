@@ -1,13 +1,12 @@
 import React, { FC } from 'react'
 import { VscClose, VscHeart, VscHeartFilled } from 'react-icons/vsc'
-import { CommentUser } from './CommentUser'
 import Link from 'next/link'
 import { Modal } from './Modal'
 import { Favorite } from '../SinglePost/[id]/page'
 import { AuthTokens } from '../../contexts/authContext'
-import { FormComment } from './FormComment'
-import { toast } from 'sonner'
+import { FormComment } from './Forms/FormComment'
 import { Posts } from '../interface/models'
+import CommentPost from './Cards/CardPostComponents/CommentPost'
 
 interface PostInfoProps {
   loadComment: () => void;
@@ -44,27 +43,28 @@ export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favori
               <VscClose onClick={openModal} className="text-zinc-100 text-2xl text-end cursor-pointer" />
             )}
           </div>
-          <h1 className="text-[#F1F1E6] text-xl text-center font-semibold">{postInfo.title}</h1>
-          <p className="text-zinc-100 my-4 max-md:text-sm">{postInfo.content}</p>
-
-          <hr className='mb-4'/>
-          <span className="flex flex-col justify-center items-center">
-            {postInfo.picture != "" && (
-              <img
-                src={`${postInfo.picture}`}
-                className="rounded-lg mt-4"
-                alt={`picture-${postInfo.picture}`}
-                width={500}
-                height={400}
-              />
-            )}
-          </span>
-          {postInfo && postInfo.comments.map((comment, index) => (
-            <ol key={comment.idComment}>
-              <CommentUser deleteComment={deleteComment} key={index} dataComment={comment} />
-            </ol>
-          ))}
-          <FormComment id={idUser} loadComment={loadComment}/>
+          <div className=" mb-4 border-2 border-transparent">
+            <h1 className="text-[#F1F1E6] text-xl text-center font-semibold">{postInfo.title}</h1>
+            <p className="text-zinc-100 my-4 max-md:text-sm">{postInfo.content}</p>
+            <hr className='mb-4'/>
+            <span className="flex flex-col justify-center items-center">
+              {postInfo.picture != "" && (
+                <img
+                  src={`${postInfo.picture}`}
+                  className="rounded-lg mt-4"
+                  alt={`picture-${postInfo.picture}`}
+                  width={500}
+                  height={400}
+                />
+              )}
+            </span>
+              {postInfo && postInfo.comments.map((comment, index) => (
+                <ol key={comment.idComment}>
+                  <CommentPost name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
+                </ol>
+              ))}
+          </div>
+          <FormComment id={idUser}/>
           <Link href="/" className="bg-slate-700 text-zinc-100 w-40 text-center rounded-lg h-8 flex items-center justify-center m-auto mt-4 font-semibold">
             Volver al Inicio
           </Link>

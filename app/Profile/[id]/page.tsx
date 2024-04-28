@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuthContext } from "../../../contexts/authContext";
 import { Jakarta } from "../../services/fetchApi";
 import { UserProfile } from "../../interface/models";
-import { GridLoader } from "react-spinners";
+import { BounceLoader, GridLoader } from "react-spinners";
 import { UserProfileInfo } from "../../components/UserProfile";
 
 
@@ -42,7 +42,10 @@ export default function Page() {
   return (
     <section className='m-auto   max-lg:w-11/12 max-lg:flex-col flex justify-around relative border-[1px]  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 transition-all duration-300 p-8 w-[65rem] max-md:p-6 text-zinc-100  h-max  rounded-lg bg-slate-800 ' >
       {!loading 
-      ?<div className="h-80  flex justify-center items-center"> <GridLoader size={20} color="#379DFF"/></div>
+      ?<div className="h-80  flex justify-center items-center flex-col"> 
+        <BounceLoader size={85} color='#379DFF'/>
+        <p className='mt-4 font-bold text-zinc-200'>Buscando Perfil...</p>
+      </div>
       :
       (<>
       {dataUser != undefined 

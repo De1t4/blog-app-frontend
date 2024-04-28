@@ -6,7 +6,7 @@ import { useAuthContext } from '../../contexts/authContext'
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import Link from 'next/link';
 import { FormEvents } from '../interface/models';
-import { FormCreate } from '../components/FormCreate';
+import { FormCreate } from '../components/Forms/FormCreate';
 
 interface FormPost{
   title: string

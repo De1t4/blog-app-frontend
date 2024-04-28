@@ -2,13 +2,23 @@ import Link from 'next/link'
 import React from 'react'
 import { SlUserFollowing } from 'react-icons/sl'
 import { CardComponent } from './UserCard'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
+import SkeletonUser from '../Skeletons/SkeletonUser'
 
 
-export const UserList:React.FC<CardComponent> = ({ title, users, onStopFollow })=> {
+export const UserList:React.FC<CardComponent> = ({ title, users, onStopFollow, loading})=> {
   return (
     <>
-      <aside className="border-[1px]  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 transition-all duration-300   bg-slate-800 rounded-lg h-max py-4 px-4 text-xl">
+      <aside className="border-[1px]  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 transition-all duration-300   bg-slate-800 rounded-lg h-max p-3 text-xl">
         <p className=" mb-2 text-zinc-100 font-semibold text-center text-lg">{title}</p>
+        {loading 
+        ?
+        <>
+          <SkeletonUser/>
+          <SkeletonUser/>
+        </>
+        : 
+        <>
         { users  && users.length == 0 ? <p className=' text-sm text-zinc-400 font-semibold'>No estas siguiendo a nadie</p> :users && users.map((user,index)=>(
           <div key={index} className="py-1 flex items-center justify-between py-1order-2 px-2 hover:bg-slate-700 transition-all duration-200 rounded-lg cursor-pointer mb-2 ">
             <Link href={`/Profile/${user.id}`} className="z-10 justify-center flex items-center gap-2 ">
@@ -22,6 +32,9 @@ export const UserList:React.FC<CardComponent> = ({ title, users, onStopFollow })
           </div>
         ))
         }
+        </>
+        }
+
       </aside>
     </>
   )

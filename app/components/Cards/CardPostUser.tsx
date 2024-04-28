@@ -4,13 +4,24 @@ import { MyPost } from '../../page'
 
 interface PropsCard {
   myPost: MyPost[]
+  loading: boolean
 }
 
-export const CardPostUser:React.FC<PropsCard> = ({myPost}) => {
+export const CardPostUser:React.FC<PropsCard> = ({myPost, loading}) => {
   return (
-    <aside className=" max-xl:hidden border-[1px] col-start-1 row-start-1 transition-all duration-300 border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 w-full  bg-slate-800 rounded-lg h-max  py-4 px-6 text-xl">
+    <aside className=" max-xl:hidden border-[1px] col-start-1 row-start-1 transition-all duration-300 border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 w-full  bg-slate-800 rounded-lg h-max  p-3 text-xl">
       <p className="uppercase mb-2 text-zinc-100 font-semibold text-center ">Mis Posteos</p>
-      {myPost && myPost.length === 0 ? (
+      {loading 
+      ?  <div className="py-1 flex flex-col items-center mb-2 animate-pulse w-full">
+      <div className="flex items-center gap-2">
+        <div className="flex flex-col gap-y-2 w-full">
+          <div className=" w-40 h-2 bg-slate-600  rounded"></div>
+          <div className="w-40 h-2 bg-slate-600  rounded"></div>
+        </div>
+      </div>
+    </div>
+      :<>
+        {myPost && myPost.length === 0 ? (
         <span className="flex flex-col justify-center items-center">
           <p className="text-zinc-200 text-sm text-center mb-2"> No tienes Posteos...</p> 
           <Link href={"/PostCreate"}>
@@ -24,6 +35,8 @@ export const CardPostUser:React.FC<PropsCard> = ({myPost}) => {
           </Link>
         ))
       )}
+      </>
+      }
     </aside>
   )
 }
