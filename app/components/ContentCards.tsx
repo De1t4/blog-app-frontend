@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { useAuthContext } from '../../contexts/authContext';
 import { getUsers } from '../services/fetchApi';
 
-const API_REQUEST = "https://blog-app-backend-karg.onrender.com/deleteFollower"
+const API_REQUEST = "https://blog-app-backend-karg.onrender.com"
 
 const ContentCards = () => {
   const [usersEntity, setUsersEntity] = useState<Users[]>([])
