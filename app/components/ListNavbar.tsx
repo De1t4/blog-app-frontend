@@ -18,7 +18,7 @@ const ListNavbar:React.FC<ListProps> = ({userState, idUser, logoutUser, openModa
     <div className=' '>
       {statusNavbar && (<>
         {userState && userState ?
-          <div className=" absolute left-0  translate-y-11 rounded-xl z-50 w-full flex flex-col bg-slate-950 gap-y-8 p-8 text-center items-center justify-center border-b-4 border-gold">
+          <div className=" absolute left-0  translate-y-11 rounded-b-xl z-50 w-full flex flex-col bg-slate-950 gap-y-8 p-8 text-center items-center justify-center border-b-4 border-gold">
             <Link href={`/Profile/${idUser}`} className={styleBtn}><FaRegCircleUser/>Mi Perfil</Link>
             <Link href={`/PostCreate`} className={styleBtn}><FaPlus/> Crear Post</Link>
             <Link href={`/Favorites/${idUser}`} className={styleBtn}><FaHeartCirclePlus/>Favoritos</Link>

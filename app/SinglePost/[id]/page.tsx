@@ -55,7 +55,7 @@ export default function Page() {
     }else{
       setFavorite({ fav: true })      
       try{
-        await axios.post(`${API_REQUEST}/favorite`,{
+        await axios.post(`${API_REQUEST}/favorite/${id}/${authTokens.idUser}`,{
           idPosts: id,
           UserId: authTokens.idUser
         })
@@ -68,7 +68,7 @@ export default function Page() {
 
   const removeFavorite = async () => {
     try{
-      await axios.delete(`${API_REQUEST}/favoriteDelete/${authTokens.idUser}/${id}`)
+      await axios.delete(`${API_REQUEST}/favoriteDelete/${id}/${authTokens.idUser}`)
       toast.success("El post fue elimando de tus favoritos")
       setFavorite({ fav: false })      
     }catch{

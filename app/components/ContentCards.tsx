@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import { useAuthContext } from '../../contexts/authContext';
 import { getUsers } from '../services/fetchApi';
 
+const API_REQUEST = "https://blog-app-backend-karg.onrender.com/deleteFollower"
+
 const ContentCards = () => {
   const [usersEntity, setUsersEntity] = useState<Users[]>([])
   const [prevDataUser, setPrevDataUser] = useState<Users[]>([])
@@ -36,7 +38,7 @@ const ContentCards = () => {
 
   const onStopFollow = (userData:Users) =>{
     try{
-      axios.delete(`https://blog-app-backend-karg.onrender.com/deleteFollower/${authTokens.idUser}/${userData.id}`)
+      axios.delete(`${API_REQUEST}/deleteFollower/${authTokens.idUser}/${userData.id}`)
       toast.success("El usuario fue removido de tus seguidores")
       setUsersEntity(usersEntity.concat(follow.filter((a)=> a.id == userData.id)))
       setFollow(follow.filter((a)=> a.id != userData.id))
@@ -47,7 +49,7 @@ const ContentCards = () => {
 
   const onFollow = (userData: Users) =>{
     try{
-      axios.post(`https://blog-app-backend-karg.onrender.com/addNewFollower/${authTokens.idUser}/${userData.id}`);
+      axios.post(`${API_REQUEST}/addNewFollower/${authTokens?.idUser}/${userData.id}`);
       toast.success(`Está siguiendo al usuario ${userData.name}`);
       setPrevDataUser(prevDataUser.filter((a)=> a.id != userData.id))
       setFollow(follow.concat(usersEntity.filter((a)=> a.id == userData.id)))
