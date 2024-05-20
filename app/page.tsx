@@ -73,9 +73,9 @@ return (
       <ContentCards/>
      )}
     {visible && 
-      <Link href="/#inicio" className=" border-slate-700 z-30 bg-slate-400 border-2 items-center justify-center flex animate-bounce w-10 rounded-full h-10 fixed right-5 bottom-5">
-        <TiArrowUpOutline className=" scale-150"/>          
-      </Link>
+    <Link href="/#inicio" className=" border-slate-700 z-30 bg-slate-400 border-2 items-center justify-center flex animate-bounce w-10 rounded-full h-10 fixed right-5 bottom-5">
+      <TiArrowUpOutline className=" scale-150"/>          
+    </Link>
     }
   </div>
 )

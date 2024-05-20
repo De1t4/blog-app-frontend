@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import axios from "axios";
 import { useAuthContext } from '../../../contexts/authContext';
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa6';
 
 const FormLogin = ({closeModal, changeForm}) => {
   const [stateLogin, setStateLogin] = useState<boolean>(false)
@@ -64,8 +65,7 @@ const FormLogin = ({closeModal, changeForm}) => {
   };
 
   return (
-    <div className="w-full lg:w-3/5  py-12 px-12  bg-gradient-to-r from-slate-900 to-slate-800 h-full relative">
-      <span onClick={closeModal} className="text-4xl close-btn cursor-pointer absolute  right-8 top-8 " id="closeModalBtn">&times;</span>
+    <div className="relative">
       <h2  className="text-3xl mb-4">Iniciar Sesión</h2>
       <p className="mb-4">
         Ingresa tus datos para iniciar sesión.
@@ -78,13 +78,18 @@ const FormLogin = ({closeModal, changeForm}) => {
         <Input fetchData={updatePassword} type={"password"} info={"************"} name={"password"} label={"Password:"}/>
         </div>
         <div className="my-4">
-          <button className="w-full bg-[#F3BF3A] py-3 text-center text-black font-bold rounded-lg flex items-center justify-center">{loading && <AiOutlineLoading3Quarters className='mr-2 animate-spin'/>} Iniciar Sesión</button>
+          <button className="w-full bg-gold py-2 text-center text-black font-bold rounded-lg flex items-center justify-center">{loading && <AiOutlineLoading3Quarters className='mr-2 animate-spin'/>} Iniciar Sesión</button>
         </div>
         {stateLogin && (<p className=' text-red-600 font-bold text-sm'>La Contraseña o el Usuario son Incorrectos</p>)}
         {warning && (<p className=' text-red-600 font-bold text-sm'>Ingresar los datos faltantes</p>)}
-
         <p className='mt-4 border-b-2  w-max cursor-pointer font-semibold' onClick={changeForm}>Quiero Registrame</p>
       </form>
+      <div className=" flex justify-center gap-8 mt-4 text-xl ">
+        <FaFacebook className=' hover:scale-105 transition-all duration-300 cursor-pointer'/>
+        <FaTwitter className=' hover:scale-105 transition-all duration-300 cursor-pointer'/>
+        <FaInstagram className=' hover:scale-105 transition-all duration-300 cursor-pointer'/>
+      </div>
+
    </div>
   );
 }

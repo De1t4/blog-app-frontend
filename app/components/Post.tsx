@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState } from "react"
 import React from "react";
 import HeaderSearch from "./HeaderSearch";
@@ -8,92 +7,112 @@ import SkeletonPost from "./Skeletons/SkeletonPost";
 import { toast } from "sonner";
 import ButtonsFilter from "./ButtonsFilter";
 import { CardsPost } from "./Cards/CardsPost";
+import { fetchPosts } from "../services/fetchApi";
+import NotFoundImage from "./notFoundImage";
 import { setItem } from "../services/useLocalStorage";
 
 export default function Post() {
-  const [postData, setPostData] = useState<Posts[]>(null)
+  const [postData, setPostData] = useState<Posts[]>()
   const [search, setSearch] = useState("")
-  const [option, setOption] = useState("")
+  const [option, setOption] = useState("all")
   const [loading, setLoading] = useState<boolean>(true);
-  const [filteredData, setFilteredData] = useState<Posts[]>(postData);
+  const [currentPost, setCurrentPost] = useState(0);
+  const [sort, setSort] = useState(false)
 
+  const INICIO = 0;
+  const FIN = 5 + currentPost;  
   useEffect(()=>{
     if (localStorage.getItem("post")) {
-      setPostData(JSON.parse(localStorage.getItem("post")));
-      setFilteredData(JSON.parse(localStorage.getItem("post")));
       setLoading(false)
-    } else {
-      fetchDataPost();
-    } 
+      setPostData(JSON.parse(localStorage.getItem("post")));
+    }
+    fetchDataPost();
   },[])
-  
+  /*FALTA QUE SE ACTUALICE DEL LOCALSTORAGE CUANDO SE CREA UN NUEVO POST! */
 
   const fetchDataPost = async () =>{
-      try{
-        const response = await axios.get('https://blog-app-backend-karg.onrender.com/getPosts')
-        setPostData(response.data)
-        setFilteredData(response.data)
-        setItem("post", response.data)
-      }catch{
-        console.error("error");
-      }finally{
-        setLoading(false)
-      }   
+    try{
+      const data:Posts[] = await fetchPosts()
+      setPostData(data)
+      setItem("post", data)
+    }catch{
+      console.error("error");
+    }finally{
+      setLoading(false)
+    }   
   }
 
   const updateSelect = (e:React.ChangeEvent<HTMLSelectElement>) =>{
     setOption(e.target.value)
-    filterData(e.target.value, search)
   }
 
   const updateSearch = (e:React.ChangeEvent<HTMLInputElement>)=>{
-    setSearch(e.target.value)
-    filterData(option, e.target.value)
+      setSearch(e.target.value)
   }
 
-  const filterData = (option:string, search:string) =>{
-    const filterPosts = option === "Todos" ? postData && postData.filter((post)=> post.title.toLowerCase().includes(search.toLowerCase())) 
-    : postData && postData.filter((post)=>
-    post.type.toLowerCase().includes(option.toLowerCase()) &&
-    post.title.toLowerCase().includes(search.toLowerCase())
-    )
-    setFilteredData(filterPosts)
+  const filterPostsData = ():Posts[] =>{
+    let dataPosts = postData
+
+    if(postData){
+    
+      if(option !== "all"){
+        dataPosts = dataPosts.filter((a)=> a.type === option)
+      }
+  
+      if(search !== ""){
+        dataPosts = dataPosts.filter((a)=> a.title.toLowerCase().includes(search.toLowerCase()))
+      }
+
+      if(sort){
+        dataPosts = dataPosts.sort((a, b)=> new Date(a.datePosts).getTime() - new Date(b.datePosts).getTime())
+      }else{
+        dataPosts = dataPosts.sort((a, b)=> new Date(b.datePosts).getTime() - new Date(a.datePosts).getTime())
+      }
+  
+    }
+    return dataPosts
+  }
+
+
+
+  const viewMorePosts = () =>{
+    if(postData.length > currentPost){
+      setCurrentPost(currentPost+5)
+    }else{
+      toast.warning("Ya no hay mas posts")
+    }
   }
   
   const orderPostsNew = () =>{
-    setFilteredData((prevData) => [...prevData].sort((a, b) => new Date(b.datePosts).getTime() - new Date(a.datePosts).getTime())
-  );
-  }
+    setSort(false)
+  } 
+
   const orderPostsOld = () =>{
-    setFilteredData((prevData) => [...prevData].sort((a, b) => new Date(a.datePosts).getTime() - new Date(b.datePosts).getTime()));
+    setSort(true)
   }
 
-  const deleteComment = async (idComment: number) => {
+  const reloadData = async () => {
+    setLoading(true);
     try {
-      await axios.delete(`https://blog-app-backend-karg.onrender.com/deleteComment/${idComment}`);
-      toast.success("Comentario eliminado correctamente");
-      const filteredPosts = filteredData?.map(post => {
-        const filteredComments = post.comments.filter(comment => comment.idComment !== idComment);
-        return { ...post, comments: filteredComments };
-      });
-      setFilteredData(filteredPosts);
-    } catch (error) {
-      console.error("Error al eliminar el comentario:", error);
-      toast.warning("Ocurrió un error, por favor intenta de nuevo");
+      await fetchDataPost();
+    } finally {
+      setLoading(false);
     }
   };
+
+
   return (
     <div className=" max-md:col-span-4 max-lg:col-span-4 col-span-3 col-start-2 max-xl:col-start-1">
       <HeaderSearch updateSearch={updateSearch} updateSelect={updateSelect}></HeaderSearch>
+      
       <ButtonsFilter orderPostsOld={orderPostsOld} orderPostsNew={orderPostsNew}/>
       <section className="w-full flex flex-col  items-center  ">
       {loading && <SkeletonPost/> }
-      { filteredData?.map((post, index)=>(
-        <CardsPost key={post.id} post={post} index={index} deleteComment={deleteComment}/>
+      { filterPostsData() && filterPostsData().slice(INICIO,FIN).map((post, index)=>(
+        <CardsPost key={post.id} post={post} index={index} reloadData={reloadData} />
       ))}
-
-     {/* : <><NotFoundImage/> <p className=" text-2xl text-zinc-200 font-semibold">El post no fue encontrado</p></> */}
-      
+     {!loading && <button onClick={viewMorePosts} className={`mt-4 w-40 bg-gold p-2 rounded-lg font-semibold  transition-all duration-300 hover:brightness-75 ${(postData && filterPostsData().length <= FIN) && 'hidden'}`}>Mostrar más</button>}
+      {postData && filterPostsData().length == 0 &&      <><NotFoundImage/> <p className=" text-2xl text-zinc-200 font-semibold">El post no fue encontrado</p></>}      
       </section>                
     </div>
   )

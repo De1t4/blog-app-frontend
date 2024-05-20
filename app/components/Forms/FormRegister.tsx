@@ -56,9 +56,8 @@ const FormRegister = ({closeModal, changeForm}) => {
   const registerUser = async (editUser: IUser) =>{
     setLoading(true)
     try{
-      const response = await axios.post(`${API}/createUser`, editUser)
-
-
+      await axios.post(`${API}/createUser`, editUser)
+      closeModal()
     }catch(error: any){
       if(error.response.status === FOUND_USER){
         setError("El email ingresado ya existe")
@@ -70,8 +69,7 @@ const FormRegister = ({closeModal, changeForm}) => {
 
   /* VERIFICAR POR QUE NO REGISTRA FAVORITOS CON LOS NUEVOS USUARIOS*/
   return (
-    <div className="w-full lg:w-3/5 py-12 px-12 bg-slate-900 h-full relative">
-    <span onClick={closeModal} className="text-4xl close-btn cursor-pointer absolute  right-8 top-8 " id="closeModalBtn">&times;</span>
+    <div className="relative">
     <h2  className="text-3xl mb-4">Register</h2>
 
     <form onSubmit={handleSubmit}>
@@ -89,10 +87,9 @@ const FormRegister = ({closeModal, changeForm}) => {
         <Input type={"password"} info={"************"} name={"passwordRepeat"} label={"Repetir Contraseña"} fetchData={handleChangeInput}/>
       </div>
       <div className="mt-2">
-        <button className="w-full bg-[#F3BF3A] py-3 text-center text-black font-bold rounded-lg flex justify-center items-center">{loading && <AiOutlineLoading3Quarters className='mr-2 animate-spin'/>}  Register Now</button>
+        <button className="w-full bg-[#F3BF3A] py-2 text-center text-black font-bold rounded-lg flex justify-center items-center">{loading && <AiOutlineLoading3Quarters className='mr-2 animate-spin'/>}  Register Now</button>
       </div>
       <p className='text-red-600 font-bold text-sm'>{error}</p>
-
       <p className='mt-4 border-b-2  w-max cursor-pointer font-semibold' onClick={changeForm}>Ya estoy registrado</p>
     </form>
    </div>

@@ -32,7 +32,7 @@ export const UserCard:React.FC<CardComponent> = ({loading, title, users, onFollo
               {users && users.map((user,index)=>(
                 <div key={index} className=" flex items-center justify-between py-1 py-1order-2 px-2 hover:bg-slate-700 transition-all duration-200 rounded-lg cursor-pointer mb-2">
                   <Link href={`/Profile/${user.id}`} className="z-10 justify-center flex items-center gap-2 ">
-                    <img src={`https://i.pravatar.cc/100?img=${user.name}`} alt={`image-profile-${user.name} `} className="w-8 rounded-full" />
+                    <img src={`https://api.multiavatar.com/${user.id}.png`} alt={`image-profile-${user.name} `} className="w-8 rounded-full" />
                     <span className="flex flex-col">
                       <p className="text-xs text-zinc-300 font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{user.name} </p>
                       <p className="text-xs text-zinc-300 font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{user.lastname}</p>

@@ -32,7 +32,7 @@ export default function Page() {
 
   useEffect(()=>{
     fetchDataPost()
-  },[])
+  },[isLoggedIn])
 
   const fetchDataPost = async () =>{
     setLoading(true);
@@ -107,7 +107,7 @@ export default function Page() {
           <BounceLoader size={85} color='#379DFF'/>
           <p className='mt-4 font-bold text-zinc-200'>Cargando Datos...</p>
         </div>
-      :<PostInfo loadComment={loadComment} postInfo={postInfo} favorite={favorite} authTokens={authTokens} openModal={openModal} isModalOpen={isModalOpen} addFavorite={addFavorite} removeFavorite={removeFavorite} deletePost={deletePost} closeModal={closeModal} idUser={Number(id)} deleteComment={deleteComment}/>
+      :<PostInfo isLoggedIn={isLoggedIn} loadComment={loadComment} postInfo={postInfo} favorite={favorite} authTokens={authTokens} openModal={openModal} isModalOpen={isModalOpen} addFavorite={addFavorite} removeFavorite={removeFavorite} deletePost={deletePost} closeModal={closeModal} idUser={Number(id)} deleteComment={deleteComment}/>
       }
     </article>
   )

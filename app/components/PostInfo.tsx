@@ -7,6 +7,8 @@ import { AuthTokens } from '../../contexts/authContext'
 import { FormComment } from './Forms/FormComment'
 import { Posts } from '../interface/models'
 import CommentPost from './Cards/CardPostComponents/CommentPost'
+import NotFoundImage from './notFoundImage'
+import { ButtonHome } from './Button/Buttons'
 
 interface PostInfoProps {
   loadComment: () => void;
@@ -21,28 +23,31 @@ interface PostInfoProps {
   closeModal: () => void;
   idUser: number
   deleteComment: (idComment: number) => void;
+  isLoggedIn: boolean
 }
 
-export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favorite, authTokens, openModal, isModalOpen, addFavorite, removeFavorite, deletePost, closeModal, idUser, deleteComment}) =>{
+export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favorite, authTokens, openModal, isModalOpen, addFavorite, removeFavorite, deletePost, closeModal, idUser, deleteComment, isLoggedIn}) =>{
 
 
   return (
     <>
       {postInfo != undefined ? (
-        <div className="w-full">
-          <div className="flex justify-between">
-            {favorite?.fav ? (
-              <VscHeartFilled
-                onClick={removeFavorite}
-                className="text-red-700 text-2xl text-end cursor-pointer"
-              />
-            ) : (
-              <VscHeart onClick={addFavorite} className="text-red-700 text-2xl text-end cursor-pointer" />
-            )}
-            {authTokens != null && authTokens.idUser == postInfo.idUser && (
-              <VscClose onClick={openModal} className="text-zinc-100 text-2xl text-end cursor-pointer" />
-            )}
-          </div>
+          <div className="w-full">
+          {isLoggedIn &&
+            <div className="flex justify-between">
+              {favorite?.fav ? (
+                <VscHeartFilled
+                  onClick={removeFavorite}
+                  className="text-red-700 text-2xl text-end cursor-pointer"
+                />
+              ) : (
+                <VscHeart onClick={addFavorite} className="text-red-700 text-2xl text-end cursor-pointer" />
+              )}
+              {authTokens != null && authTokens.idUser == postInfo.idUser && (
+                <VscClose onClick={openModal} className="text-zinc-100 text-2xl text-end cursor-pointer" />
+              )}
+            </div>
+          }
           <div className=" mb-4 border-2 border-transparent">
             <h1 className="text-[#F1F1E6] text-xl text-center font-semibold">{postInfo.title}</h1>
             <p className="text-zinc-100 my-4 max-md:text-sm">{postInfo.content}</p>
@@ -70,15 +75,11 @@ export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favori
           </Link>
         </div>
       ) : (
-        <>
+        <div className='flex flex-col justify-center items-center'>
           <h1 className="text-zinc-100 font-semibold text-lg text-center">El post no fue encontrado</h1>
-          <Link
-            href="/"
-            className="bg-slate-700 text-zinc-100 w-20 text-center rounded-lg h-8 flex items-center justify-center m-auto mt-4 font-semibold"
-          >
-            Atras
-          </Link>
-        </>
+          <NotFoundImage/>
+          <ButtonHome/>
+        </div>
       )}
 
       <Modal stateModal={isModalOpen}>

@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import { Toaster } from 'sonner'
 import React from 'react'
 import AuthContextProvider from '../contexts/authContext'
+import Footer from './components/Footer'
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
         <AuthContextProvider>
           <Navbar></Navbar>
           <main className='m-auto min-h-screen bg-slate-900  py-10 max-lg:px-0'>{children}</main>
+          <Footer/>
         </AuthContextProvider>
       </body>
     </html>

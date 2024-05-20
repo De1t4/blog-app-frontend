@@ -36,13 +36,21 @@ const API_REQUEST = "https://blog-app-backend-karg.onrender.com"
 //   return {data, loading, error}
 // }
 
+export const fetchPosts = async () =>{
+  try{
+    const response = await axios.get(`https://blog-app-backend-karg.onrender.com/getPosts`)
+    return response.data
+  }catch{
+    console.log("error no encontrado")
+  }
+}
+
 export const fetchPostSingle = async (id: number) =>{
   try{
     const response = await axios.get(`https://blog-app-backend-karg.onrender.com/getPosts/${id}`)
     return response.data
   }catch{
     console.log("error no encontrado")
-    return "error"
   }
 }
 

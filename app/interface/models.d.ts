@@ -97,4 +97,5 @@ export interface Favorite {
   title: string
   content: string
   favorite: number
+  date: string
 }

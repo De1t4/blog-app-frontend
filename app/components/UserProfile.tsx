@@ -21,7 +21,7 @@ export const UserProfileInfo:React.FC<UserProfileProps> = ({ dataUser, authToken
         )}
         
         <img className="my-4 rounded-full w-32"
-          src={`https://i.pravatar.cc/100?img=${dataUser.name}`}
+          src={`https://api.multiavatar.com/${dataUser.id}.png`}
           alt="" />
         <p className={`font-bold text-xl font-sans ${Jakarta}`}>{dataUser.name} {dataUser?.lastname}</p>
         <p className={`font-semibold text-gray-400 ${Jakarta}`}>{dataUser?.email}</p>

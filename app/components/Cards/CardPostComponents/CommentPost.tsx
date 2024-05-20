@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { useAuthContext } from '../../../../contexts/authContext';
@@ -5,7 +6,19 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { calculeDate } from '../../../services/fetchApi';
 import { FaTrash } from 'react-icons/fa6';
 
-const CommentPost = ({name, idUser, lastname, email, idComment, deleteComment, content, dateComment}) => {
+interface CommentsProps {
+  name:string
+  idUser: number
+  lastname: string
+  email: string
+  idComment: number
+  deleteComment: (idComment: number) => void
+  content: string
+  dateComment: string
+}
+
+
+const CommentPost:React.FC<CommentsProps> = ({name, idUser, lastname, email, idComment, deleteComment, content, dateComment}) => {
   const [isPopoverOpen, setIsPopoverOpen ] = useState<boolean>(false)
   const { authTokens } = useAuthContext()
   const openPopover = () =>{
@@ -16,7 +29,7 @@ const CommentPost = ({name, idUser, lastname, email, idComment, deleteComment, c
     <li className=" text-zinc-300 my-4">
     <div className="flex items-center justify-between relative  gap-4 ">
       <div className="flex gap-2 items-center">
-        <img src={`https://i.pravatar.cc/100?img=${name}`} alt={`image-profile-${name} `} className=" rounded-full w-10"/>
+        <img src={`https://api.multiavatar.com/${idUser}.png`} alt={`image-profile-${name} `} className=" rounded-full w-10"/>
         <span className=" ">
           <Link href={`/Profile/${idUser}`}>
             <p className="text-zinc-100 font-bold max-md:text-xs">{name} {lastname}  <span className="text-xs font-semibold text-zinc-500 overflow-hidden text-ellipsis whitespace-nowrap">{calculeDate(dateComment)}</span></p>
