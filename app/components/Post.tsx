@@ -28,7 +28,6 @@ export default function Post() {
     }
     fetchDataPost();
   },[])
-  /*FALTA QUE SE ACTUALICE DEL LOCALSTORAGE CUANDO SE CREA UN NUEVO POST! */
 
   const fetchDataPost = async () =>{
     try{
@@ -91,13 +90,8 @@ export default function Post() {
     setSort(true)
   }
 
-  const reloadData = async () => {
-    setLoading(true);
-    try {
-      await fetchDataPost();
-    } finally {
-      setLoading(false);
-    }
+  const reloadData =  () => {
+    fetchDataPost();
   };
 
 
