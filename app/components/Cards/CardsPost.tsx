@@ -42,7 +42,7 @@ export const CardsPost:React.FC<CardPostProps> = ({post, index, reloadData}) => 
         <ProfilePost id={post.idUser} name={post.name} datePosts={post.datePosts} type={post.type}/>
         <ContentPost id={post.id} picture={post.picture} content={post.content} title={post.title}/>
         <ButtonViewComments toggleComments={toggleComments} index={index} length={post.comments.length}/>
-        <FormComment id={post.id}/>
+        <FormComment id={post.id} loadComment={reloadData}/>
           {visibleComments[index] && 
             <>
               <ol>

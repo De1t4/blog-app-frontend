@@ -98,7 +98,6 @@ export default function Post() {
   return (
     <div className=" max-md:col-span-4 max-lg:col-span-4 col-span-3 col-start-2 max-xl:col-start-1">
       <HeaderSearch updateSearch={updateSearch} updateSelect={updateSelect}></HeaderSearch>
-      
       <ButtonsFilter orderPostsOld={orderPostsOld} orderPostsNew={orderPostsNew}/>
       <section className="w-full flex flex-col  items-center  ">
       {loading && <SkeletonPost/> }

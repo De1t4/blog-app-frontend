@@ -5,7 +5,7 @@ import { toast } from "sonner";
 import { useAuthContext } from '../../../contexts/authContext';
 
 
-export const FormComment = ( {id} ) => {
+export const FormComment = ( {id, loadComment} ) => {
   const { isLoggedIn, authTokens } = useAuthContext();
   const [formUser, setFormUser] = useState({
     comment:""
@@ -31,6 +31,7 @@ export const FormComment = ( {id} ) => {
             comment: formUser.comment
           });
           setFormUser({ comment: '' });
+          loadComment()
           toast.success('Comentario creado');
           (e.target as HTMLFormElement).reset();
         } catch (error) {

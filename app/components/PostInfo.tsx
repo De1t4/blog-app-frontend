@@ -9,6 +9,7 @@ import { Posts } from '../interface/models'
 import CommentPost from './Cards/CardPostComponents/CommentPost'
 import NotFoundImage from './notFoundImage'
 import { ButtonHome } from './Button/Buttons'
+import ContentPost from './Cards/CardPostComponents/ContentPost'
 
 interface PostInfoProps {
   loadComment: () => void;
@@ -29,58 +30,70 @@ interface PostInfoProps {
 export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favorite, authTokens, openModal, isModalOpen, addFavorite, removeFavorite, deletePost, closeModal, idUser, deleteComment, isLoggedIn}) =>{
 
 
+  if (!postInfo) {
+    return (
+      <div className='flex flex-col justify-center items-center'>
+        <h1 className="text-zinc-100 font-semibold text-lg text-center">El post no fue encontrado</h1>
+        <NotFoundImage />
+        <ButtonHome />
+      </div>
+    );
+  }
+
   return (
     <>
-      {postInfo != undefined ? (
-          <div className="w-full">
-          {isLoggedIn &&
-            <div className="flex justify-between">
-              {favorite?.fav ? (
-                <VscHeartFilled
-                  onClick={removeFavorite}
-                  className="text-red-700 text-2xl text-end cursor-pointer"
-                />
-              ) : (
-                <VscHeart onClick={addFavorite} className="text-red-700 text-2xl text-end cursor-pointer" />
-              )}
-              {authTokens != null && authTokens.idUser == postInfo.idUser && (
-                <VscClose onClick={openModal} className="text-zinc-100 text-2xl text-end cursor-pointer" />
-              )}
-            </div>
-          }
-          <div className=" mb-4 border-2 border-transparent">
-            <h1 className="text-[#F1F1E6] text-xl text-center font-semibold">{postInfo.title}</h1>
-            <p className="text-zinc-100 my-4 max-md:text-sm">{postInfo.content}</p>
-            <hr className='mb-4'/>
-            <span className="flex flex-col justify-center items-center">
-              {postInfo.picture != "" && (
-                <img
-                  src={`${postInfo.picture}`}
-                  className="rounded-lg mt-4"
-                  alt={`picture-${postInfo.picture}`}
-                  width={500}
-                  height={400}
-                />
-              )}
-            </span>
-              {postInfo && postInfo.comments.map((comment, index) => (
-                <ol key={comment.idComment}>
-                  <CommentPost name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
-                </ol>
-              ))}
+      <section className="w-full">
+        {isLoggedIn && (
+          <div className="flex justify-between">
+            {favorite?.fav ? (
+              <VscHeartFilled
+                onClick={removeFavorite}
+                className="text-red-700 text-2xl cursor-pointer"
+              />
+            ) : (
+              <VscHeart
+                onClick={addFavorite}
+                className="text-red-700 text-2xl cursor-pointer"
+              />
+            )}
+            {authTokens?.idUser === postInfo.idUser && (
+              <VscClose
+                onClick={openModal}
+                className="text-zinc-100 text-2xl cursor-pointer"
+              />
+            )}
           </div>
-          <FormComment id={idUser}/>
-          <Link href="/" className="bg-slate-700 text-zinc-100 w-40 text-center rounded-lg h-8 flex items-center justify-center m-auto mt-4 font-semibold">
-            Volver al Inicio
-          </Link>
+        )}
+        <div className="mb-4 border-2 border-transparent">
+          <ContentPost
+            id={postInfo.id}
+            picture={postInfo.picture}
+            content={postInfo.content}
+            title={postInfo.title}
+          />
+          {postInfo.comments.map((comment) => (
+            <ol key={comment.idComment}>
+              <CommentPost
+                name={comment.name}
+                idUser={comment.idUser}
+                lastname={comment.lastname}
+                email={comment.email}
+                idComment={comment.idComment}
+                deleteComment={deleteComment}
+                content={comment.content}
+                dateComment={comment.dateComment}
+              />
+            </ol>
+          ))}
         </div>
-      ) : (
-        <div className='flex flex-col justify-center items-center'>
-          <h1 className="text-zinc-100 font-semibold text-lg text-center">El post no fue encontrado</h1>
-          <NotFoundImage/>
-          <ButtonHome/>
-        </div>
-      )}
+        <FormComment id={idUser} loadComment={loadComment}/>
+        <Link
+          href="/"
+          className="bg-slate-700 text-zinc-100 w-40 text-center rounded-lg h-8 flex items-center justify-center m-auto mt-4 font-semibold"
+        >
+          Volver al Inicio
+        </Link>
+      </section>
 
       <Modal stateModal={isModalOpen}>
         <section className="flex flex-col border-2 border-blue-800  items-center justify-center transition-all duration-300 w-96 modal-content bg-slate-950  shadow-xl shadow-[#0a2170] text-white rounded-lg  p-6  max-md:w-4/5 h-96">
