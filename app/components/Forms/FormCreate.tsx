@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { MdSaveAlt } from 'react-icons/md'
+import { FormEvents } from '../../interface/models'
 
 interface FormCreateProps{
-  handleSubmit:  (e) => void
-  handleChangeInput: (e) => void
-  handleChangedImage: (e) => void
+  handleSubmit:  (e:React.FormEvent) => void
+  handleChangeInput: (e:FormEvents["change"]) => void
+  handleChangedImage: (e:ChangeEvent<HTMLInputElement>) => void
+  imageSelect: File | null
 }
 
-export const FormCreate:React.FC<FormCreateProps> = ({handleSubmit, handleChangeInput, handleChangedImage}) =>{
+export const FormCreate:React.FC<FormCreateProps> = ({handleSubmit, handleChangeInput, handleChangedImage, imageSelect}) =>{
   return (
     <form className='flex flex-col mt-2 w-full' onSubmit={handleSubmit}>
     <label htmlFor="title" id="title" className='flex flex-col text-zinc-100 font-semibold'>Titúlo Post         
@@ -32,7 +34,10 @@ export const FormCreate:React.FC<FormCreateProps> = ({handleSubmit, handleChange
           <p className=" text-sm text-center">Agregar imagen aquí.</p>
         </span>
       </label>
+
     </div>
+    {imageSelect != null && <p className=' text-center text-slate-100 font-semibold mt-4'>{imageSelect.name}</p>}
+
     <button type='submit' className=' transition-all duration-300 hover:scale-105 bg-slate-700 w-2/4 h-10 mt-4 m-auto  rounded-lg text-zinc-100 font-semibold'>Crear Posts</button>
   </form>  
   )

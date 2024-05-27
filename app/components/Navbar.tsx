@@ -76,10 +76,8 @@ export default function Navbar() {
         } 
       </div>
         <Modal stateModal={isModalOpen} onClick={closeModal}>
-        <motion.div animate={{}}>
 
           <FormUser closeModal={closeModal}/>
-          </motion.div>
 
         </Modal>
     </nav>

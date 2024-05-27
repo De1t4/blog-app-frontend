@@ -33,7 +33,9 @@ export default function Post() {
     try{
       const data:Posts[] = await fetchPosts()
       setPostData(data)
-      setItem("post", data)
+      if(data != null){
+        setItem("post", data)
+      }
     }catch{
       console.error("error");
     }finally{
@@ -104,8 +106,8 @@ export default function Post() {
       { filterPostsData() && filterPostsData().slice(INICIO,FIN).map((post, index)=>(
         <CardsPost key={post.id} post={post} index={index} reloadData={reloadData} />
       ))}
-     {!loading && <button onClick={viewMorePosts} className={`mt-4 w-40 bg-gold p-2 rounded-lg font-semibold  transition-all duration-300 hover:brightness-75 ${(postData && filterPostsData().length <= FIN) && 'hidden'}`}>Mostrar más</button>}
-      {postData && filterPostsData().length == 0 &&      <><NotFoundImage/> <p className=" text-2xl text-zinc-200 font-semibold">El post no fue encontrado</p></>}      
+     {!loading && <button onClick={viewMorePosts} className={`mt-4 w-40 bg-gold p-2 rounded-lg font-semibold  transition-all duration-300 hover:brightness-75 ${(postData != null && filterPostsData().length <= FIN) && 'hidden'}`}>Mostrar más</button>}
+      {postData && filterPostsData().length == 0 &&  <><NotFoundImage/> <p className=" text-2xl text-zinc-200 font-semibold">El post no fue encontrado</p></>}      
       </section>                
     </div>
   )

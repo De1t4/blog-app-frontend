@@ -36,6 +36,10 @@ export const CardsPost:React.FC<CardPostProps> = ({post, index, reloadData}) => 
     });
   };
 
+  const editComment = (idComment:number) =>{
+    alert(idComment)
+  }
+
   return (
     <>
       <article key={index} className=" border-[1px] max-md:p-4  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 max-lg:w-full transition-all duration-300 py-4 px-6 bg-gradient-to-tl from-slate-950 to-slate-800 h-min-72 w-full my-4 flex flex-col justify-between rounded-lg">
@@ -48,7 +52,7 @@ export const CardsPost:React.FC<CardPostProps> = ({post, index, reloadData}) => 
               <ol>
                 {
                   post.comments.map((comment)=>(
-                    <CommentPost key={comment.idComment} name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
+                    <CommentPost key={comment.idComment} name={comment.name} idUser={comment.idUser} lastname={comment.lastname} email={comment.email} idComment={comment.idComment} editComment={editComment} deleteComment={deleteComment} content={comment.content} dateComment={comment.dateComment}/>
                   ))
                 }
               </ol>

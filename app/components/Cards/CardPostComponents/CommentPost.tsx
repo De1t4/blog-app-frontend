@@ -5,6 +5,7 @@ import { useAuthContext } from '../../../../contexts/authContext';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { calculeDate } from '../../../services/fetchApi';
 import { FaTrash } from 'react-icons/fa6';
+import { FaEdit } from 'react-icons/fa';
 
 interface CommentsProps {
   name:string
@@ -13,12 +14,13 @@ interface CommentsProps {
   email: string
   idComment: number
   deleteComment: (idComment: number) => void
+  editComment: (idComment:number) => void
   content: string
   dateComment: string
 }
 
 
-const CommentPost:React.FC<CommentsProps> = ({name, idUser, lastname, email, idComment, deleteComment, content, dateComment}) => {
+const CommentPost:React.FC<CommentsProps> = ({name, idUser, lastname, email, idComment, deleteComment, editComment ,content, dateComment}) => {
   const [isPopoverOpen, setIsPopoverOpen ] = useState<boolean>(false)
   const { authTokens } = useAuthContext()
   const openPopover = () =>{
@@ -42,6 +44,7 @@ const CommentPost:React.FC<CommentsProps> = ({name, idUser, lastname, email, idC
         <BiDotsVerticalRounded onClick={() => openPopover()} className=" cursor-pointer text-xl" />
         {isPopoverOpen && (<ol  className=' z-10 border-[1px] border-slate-500 hover:border-slate-200 rounded-md flex justify-center items-left p-2 flex-col-reverse absolute transition-all duration-300  right-5 -translate-y-15 bg-slate-800 w-36 h-22'>
           <li onClick={() => deleteComment(idComment)} className='flex transition-all duration-300 items-center gap-x-2 hover:rounded-md cursor-pointer hover:bg-slate-700 p-1'><FaTrash /> Eliminar</li>
+          <li onClick={() => editComment(idComment)} className='flex transition-all duration-300 items-center gap-x-2 hover:rounded-md cursor-pointer hover:bg-slate-700 p-1'><FaEdit /> Editar</li>
         </ol>)}
       </>)}
     </div>

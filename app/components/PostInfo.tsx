@@ -29,7 +29,9 @@ interface PostInfoProps {
 
 export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favorite, authTokens, openModal, isModalOpen, addFavorite, removeFavorite, deletePost, closeModal, idUser, deleteComment, isLoggedIn}) =>{
 
-
+  const editComment = (idComment: number) =>{
+    alert(idComment)
+  }
   if (!postInfo) {
     return (
       <div className='flex flex-col justify-center items-center'>
@@ -75,6 +77,7 @@ export const  PostInfo:React.FC<PostInfoProps> = ({loadComment, postInfo, favori
             <ol key={comment.idComment}>
               <CommentPost
                 name={comment.name}
+                editComment={editComment}
                 idUser={comment.idUser}
                 lastname={comment.lastname}
                 email={comment.email}

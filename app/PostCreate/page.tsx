@@ -73,7 +73,6 @@ export default function Page() {
 
   const handleChangedImage = (e: ChangeEvent<HTMLInputElement>) =>{
     const image = (e.target as HTMLInputElement).files[0]
-    console.log(image)
     setFormPost({...formPost, picture: image})
   }
 
@@ -83,7 +82,8 @@ export default function Page() {
         <FaArrowLeftLong  className=" text-zinc-100 absolute top-4 left-6 cursor-pointer hover:scale-110 transition-all duration-200"/>
       </Link>
       <h1 className='w-full text-3xl font-semibold text-[#328FFF] text-center border-b-[1px] pb-2 border-slate-500'>Crear Post</h1>
-      <FormCreate handleSubmit={handleSubmit} handleChangeInput={handleChangeInput} handleChangedImage={handleChangedImage}/>
+    
+      <FormCreate imageSelect={formPost.picture} handleSubmit={handleSubmit} handleChangeInput={handleChangeInput} handleChangedImage={handleChangedImage}/>
     </article>
   )
 }
