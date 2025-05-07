@@ -2,7 +2,6 @@ import Link from 'next/link'
 import React from 'react'
 import { SlUserFollowing } from 'react-icons/sl'
 import { CardComponent } from './UserCard'
-import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 import SkeletonUser from '../Skeletons/SkeletonUser'
 
 

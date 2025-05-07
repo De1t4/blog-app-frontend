@@ -1,8 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['api.multiavatar.com', "res.cloudinary.com"], // Añade el dominio de la imagen remota
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.multiavatar.com',
+      },
+    ],
+    domains: ['api.multiavatar.com', "res.cloudinary.com"], // You can keep the domains array as is
   },
 }
 
-module.exports = nextConfig
+module.exports = nextConfig;

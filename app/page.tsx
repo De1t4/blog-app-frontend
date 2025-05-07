@@ -3,8 +3,6 @@ import React, { useEffect, useState } from "react";
 import Post from "./components/Post";
 import { useAuthContext } from "../contexts/authContext";
 import axios from "axios";
-import { getUsers } from "./services/fetchApi";
-import { toast } from "sonner";
 import { CardPostUser } from "./components/Cards/CardPostUser";
 import { TiArrowUpOutline } from "react-icons/ti";
 import Link from "next/link";
@@ -28,7 +26,6 @@ export default function Page() {
   const [visible, setVisible] = useState<boolean>(false);
   const [loadingMyPost, setLoadingMyPost] = useState<boolean>(false);
 
-
   const toggleVisible = () => {
     const scrolled = document.documentElement.scrollTop;
     if (scrolled > 300) {
@@ -50,7 +47,7 @@ export default function Page() {
     };
   
   }, [isLoggedIn]);
-  
+
   const fetchPostUser = async () =>{
     setLoadingMyPost(true)
     try{
@@ -77,6 +74,7 @@ return (
       <TiArrowUpOutline className=" scale-150"/>          
     </Link>
     }
+
   </div>
 )
 }

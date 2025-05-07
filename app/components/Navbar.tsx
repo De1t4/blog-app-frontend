@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useAuthContext } from '../../contexts/authContext';
 import { VscThreeBars } from 'react-icons/vsc';
-import { MdLogout, MdHome  } from "react-icons/md";
+import { MdLogout, MdHome } from "react-icons/md";
 import { Tangerine } from 'next/font/google'
 import { Modal } from './Modal';
 import FormUser from './Forms/FormUser';
@@ -11,6 +11,7 @@ import ListNavbar from './ListNavbar';
 import { FaHeartCirclePlus, FaPlus } from 'react-icons/fa6';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Avatar, Button } from '@nextui-org/react';
 
 const tangerine = Tangerine({
   weight: '400',
@@ -21,21 +22,21 @@ export default function Navbar() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userState, setUserState] = useState<boolean>(false)
   const [statusNavbar, setStatusNavbar] = useState<boolean>(false)
-  const {logout, isLoggedIn, authTokens} = useAuthContext()
+  const { logout, isLoggedIn, authTokens } = useAuthContext()
   const [windowSize, setWindowSize] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 0,
   });
 
-  const closeModal = () =>{
+  const closeModal = () => {
     setIsModalOpen(false)
   }
-  const openModal = () =>{
+  const openModal = () => {
     setIsModalOpen(true);
   }
 
   useEffect(() => {
     setUserState(isLoggedIn)
-    if(windowSize.width > 728){
+    if (windowSize.width > 728) {
       setStatusNavbar(false)
     }
     function handleResize() {
@@ -48,38 +49,38 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', handleResize);
   }, [isLoggedIn, windowSize.width])
 
-  const logoutUser = () =>{
+  const logoutUser = () => {
     logout()
   }
-  const openNavbar = () =>{
+  const openNavbar = () => {
     setStatusNavbar(!statusNavbar)
   }
   return (
-    <nav  id='inicio' className=' relative  text-white items-center bg-slate-950 flex justify-between px-8 h-16'>
-      <Link href="/#"> 
+    <nav id='inicio' className=' relative  text-white items-center bg-slate-950 flex justify-between px-8 h-16'>
+      <Link href="/#">
         <p className={`${tangerine.className} text-[2.25rem] cursor-pointer font-bold text-2xl`}>Digital Corner</p>
       </Link>
       <div className='flex gap-4 font-semibold text-[#F3BF3A]'>
         <Link href={"/"} className={`max-md:hidden cursor-pointer p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1`} ><MdHome />Inicio</Link>
-        {statusNavbar && <ListNavbar userState={userState} idUser={authTokens?.idUser} logoutUser={logoutUser} statusNavbar={statusNavbar} openModal={openModal} />}    
-        <VscThreeBars onClick={openNavbar} className=' cursor-pointer transition-all duration-300 hover:scale-105 text-2xl hidden max-md:block'/>
+        {statusNavbar && <ListNavbar userState={userState} idUser={authTokens?.idUser} logoutUser={logoutUser} statusNavbar={statusNavbar} openModal={openModal} />}
+        <VscThreeBars onClick={openNavbar} className=' cursor-pointer transition-all duration-300 hover:scale-105 text-2xl hidden max-md:block' />
         {userState ?
           <span className="flex gap-4 max-[800px]:hidden">
-            <Link href={`/PostCreate`} className='cursor-pointer p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1'><FaPlus/> Crear Post</Link>
-            <Link href={`/Favorites/${authTokens?.idUser}`} className='cursor-pointer p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1'><FaHeartCirclePlus/>Favoritos</Link>
-            <p className='cursor-pointer  bg-gold  p-2 rounded-lg text-slate-950 font-bold  transition-all duration-300 hover:brightness-105 flex items-center gap-x-1' onClick={logoutUser}><MdLogout/>Cerrar Sesión</p>
-            <Link href={`/Profile/${authTokens?.idUser}`} className=' cursor-pointer hover:scale-105 rounded-full hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1'><Image alt={"image-user"} src={`https://api.multiavatar.com/${authTokens?.idUser}.png`} width={35} height={35}/></Link>
+            <Link href={`/PostCreate`} className='cursor-pointer p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1'><FaPlus /> Crear Post</Link>
+            <Link href={`/Favorites/${authTokens?.idUser}`} className='cursor-pointer p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 flex items-center gap-x-1'><FaHeartCirclePlus />Favoritos</Link>
+            <p className='cursor-pointer  bg-gold  p-2 rounded-lg text-slate-950 font-bold  transition-all duration-300 hover:brightness-105 flex items-center gap-x-1' onClick={logoutUser}><MdLogout />Cerrar Sesión</p>
+            <Link href={`/Profile/${authTokens?.idUser}`}>
+              <Avatar src={`https://api.multiavatar.com/${authTokens?.idUser}.png`} />
+            </Link>
           </span>
-        :<>
-          <p className='cursor-pointer  p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 max-[800px]:hidden' onClick={openModal}>Iniciar Sesión</p>
-        </>
-        } 
+          : <>
+            <p className='cursor-pointer  p-2 rounded-lg hover:bg-slate-800 transition-all duration-300 hover:brightness-105 max-[800px]:hidden' onClick={openModal}>Iniciar Sesión</p>
+          </>
+        }
       </div>
-        <Modal stateModal={isModalOpen} onClick={closeModal}>
-
-          <FormUser closeModal={closeModal}/>
-
-        </Modal>
+      <Modal stateModal={isModalOpen} onClick={closeModal}>
+        <FormUser closeModal={closeModal} />
+      </Modal>
     </nav>
   )
 }

@@ -20,6 +20,7 @@ const ContentCards = () => {
     if (authTokens?.idUser != null) {
       fetchUsers();
     }  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   const fetchUsers = async () =>{
@@ -67,7 +68,7 @@ const ContentCards = () => {
   }
 
   return (
-    <section className="max-h-[27.5rem] overflow-y-auto max-lg:hidden  w-full gap-y-8 max-lg:col-span-2 col-start-5 flex-col max-md:col-span-2 max-md:col-start-4 max-w-2xl  max-md:hidden  min-w-4xl scrollbar-thin scrollbar-track-slate-700 scrollbar-thumb-slate-400  scrollbar-thumb-rounded-full scrollbar-track-rounded-full ">
+    <section className="max-h-[27.5rem] overflow-y-autow-full gap-y-8 max-lg:col-span-2 col-start-5 flex-col max-md:col-span-2 max-md:col-start-4 max-w-2xl  max-md:hidden  min-w-4xl scrollbar-thin scrollbar-track-slate-700 scrollbar-thumb-slate-400  scrollbar-thumb-rounded-full scrollbar-track-rounded-full ">
       <UserList loading={loadingFollowing} title={"Personas que estas siguiendo"} users={follow} onStopFollow={onStopFollow}/>
       <UserCard loading={loadingFollowing} title={"Buscar nuevos usuarios:"} users={usersEntity} onFollow={onFollow} updateSearchUser={updateSearchUser} />
      </section>
