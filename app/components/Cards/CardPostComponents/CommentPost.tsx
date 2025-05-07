@@ -6,6 +6,7 @@ import { BiDotsVerticalRounded } from 'react-icons/bi';
 import { calculeDate } from '../../../services/fetchApi';
 import { FaTrash } from 'react-icons/fa6';
 import { FaEdit } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface CommentsProps {
   name:string
@@ -31,7 +32,7 @@ const CommentPost:React.FC<CommentsProps> = ({name, idUser, lastname, email, idC
     <li className=" text-zinc-300 my-4">
     <div className="flex items-center justify-between relative  gap-4 ">
       <div className="flex gap-2 items-center">
-        <img src={`https://api.multiavatar.com/${idUser}.png`} alt={`image-profile-${name} `} className=" rounded-full w-10"/>
+        <Image src={`https://api.multiavatar.com/${idUser}.png`} width={40} height={40} alt={`image-profile-${name} `} className=" rounded-full w-10"/>
         <span className=" ">
           <Link href={`/Profile/${idUser}`}>
             <p className="text-zinc-100 font-bold max-md:text-xs">{name} {lastname}  <span className="text-xs font-semibold text-zinc-500 overflow-hidden text-ellipsis whitespace-nowrap">{calculeDate(dateComment)}</span></p>

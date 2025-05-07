@@ -24,6 +24,7 @@ export default function Page() {
 
   useEffect(()=>{
       fetchFavorite()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn])
 
   const fetchFavorite = async () =>{

@@ -24,7 +24,7 @@ export const InfoUser: React.FC<InfoUserProps> = ({ comments, posts }) => {
               <CardBody>
                 <li className=' list-none gap-y-2 flex flex-col'>
                   {comments.map((comment) => (
-                    <ol>{comment.comment}</ol>
+                    <ol key={comment.id_comment}>{comment.comment}</ol>
                   ))
                   }
                 </li>
@@ -36,12 +36,11 @@ export const InfoUser: React.FC<InfoUserProps> = ({ comments, posts }) => {
               <CardBody>
                 <li className=' list-none gap-y-2 flex flex-col'>
                   {posts.map((post) => (
-                    <ol className='flex'>
+                    <ol key={post.id_posts} className='flex'>
                       <span>{post.title}</span>
                       <span>{post.content}</span>
                     </ol>
                   ))
-
                   }
                 </li>
               </CardBody>

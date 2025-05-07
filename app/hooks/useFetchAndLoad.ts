@@ -29,6 +29,7 @@ const useFetchAndLoad = () => {
     return () => {
       cancelEndpoint();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { loading, callEndpoint };

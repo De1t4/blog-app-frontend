@@ -5,6 +5,8 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'api.multiavatar.com',
+        pathname: '/**',
+
       },
     ],
     domains: ['api.multiavatar.com', "res.cloudinary.com"], // You can keep the domains array as is

@@ -32,6 +32,7 @@ export default function Page() {
 
   useEffect(()=>{
     fetchDataPost()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[isLoggedIn])
 
   const fetchDataPost = async () =>{
