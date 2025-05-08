@@ -12,7 +12,6 @@ import { ProfileUser } from "../components/profileUser";
 
 export default function Page() {
   const { id } = useParams()
-  const [viewData, setViewData] = useState<boolean>(false)
   const [dataUser, setDataUser] = useState<UserProfile>()
   const { authTokens } = useAuthContext()
   const [loading, setLoading] = useState<boolean>(false)
@@ -31,14 +30,6 @@ export default function Page() {
     }
     fetchDataUser(Number(id))
   }, [id])
-
-  const fetchPosts = () => {
-    setViewData(!viewData)
-  }
-
-  const fetchComments = () => {
-    setViewData(false)
-  }
 
   return (
     <section className='m-auto   max-lg:w-11/12 max-lg:flex-col flex justify-around relative border-[1px]  border-slate-600 shadow-md shadow-slate-800 hover:shadow-slate-700 hover:border-slate-300 transition-all duration-300 p-8 w-[65rem] max-md:p-6 text-zinc-100  h-max  rounded-lg bg-slate-800 ' >

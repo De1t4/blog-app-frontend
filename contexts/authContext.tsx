@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ReactNode,
   createContext,
@@ -8,26 +8,11 @@ import {
   useMemo,
   useState,
 } from "react";
-
-export interface AuthTokens {
-  token: string;
-  refresh_token: string;
-  email: string
-  idUser: number
-  lastname: string
-  name: string
-}
-
-export interface AuthContextProps {
-  login: (authTokens: AuthTokens) => void;
-  logout: () => void;
-  isLoggedIn: boolean;
-  authTokens: AuthTokens | null;
-}
+import { AuthContextProps, AuthTokens } from "../app/interface/auth.model";
 
 export const AuthContext = createContext<AuthContextProps>({
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
   isLoggedIn: false,
   authTokens: null,
 });
@@ -39,22 +24,32 @@ export default function AuthContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const authTokensInLocalStorage = typeof window !== "undefined"
-    ? window.localStorage.getItem(AUTH_TOKENS_KEY)
-    : null;
-
   const [authTokens, setAuthTokens] = useState<AuthTokens | null>(
-    authTokensInLocalStorage ? JSON.parse(authTokensInLocalStorage) : null
+    typeof window !== "undefined"
+      ? JSON.parse(window.localStorage.getItem(AUTH_TOKENS_KEY) || "null")
+      : null
   );
-
   const login = useCallback(function (authTokens: AuthTokens) {
     window.localStorage.setItem(AUTH_TOKENS_KEY, JSON.stringify(authTokens));
     setAuthTokens(authTokens);
   }, []);
-
   const logout = useCallback(function () {
     window.localStorage.removeItem(AUTH_TOKENS_KEY);
     setAuthTokens(null);
+  }, []);
+
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedTokens = window.localStorage.getItem(AUTH_TOKENS_KEY);
+      if (!storedTokens) {
+        setAuthTokens(null);
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
   }, []);
 
   const value: AuthContextProps = useMemo(() => ({

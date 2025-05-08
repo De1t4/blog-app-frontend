@@ -3,13 +3,13 @@ import { VscClose, VscHeart, VscHeartFilled } from 'react-icons/vsc'
 import Link from 'next/link'
 import { Modal } from './Modal'
 import { Favorite } from '../SinglePost/[id]/page'
-import { AuthTokens } from '../../contexts/authContext'
 import { FormComment } from './Forms/FormComment'
 import { Posts } from '../interface/models'
 import CommentPost from './Cards/CardPostComponents/CommentPost'
 import NotFoundImage from './notFoundImage'
 import { ButtonHome } from './Button/Buttons'
 import ContentPost from './Cards/CardPostComponents/ContentPost'
+import { AuthTokens } from '../interface/auth.model'
 
 interface PostInfoProps {
   loadComment: () => void;

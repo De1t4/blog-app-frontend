@@ -12,7 +12,7 @@ const FormUser = ({closeModal}) => {
   return (
     <div  className="h-[35rem] w-[45rem] max-md:w-4/5 border-y-4 rounded-lg border-[#F3BF3A] flex justify-center items-center" onClick={(e) => e.stopPropagation()}>
       <div className=" h-full w-full max-md:hidden ">
-        <Image     width={600} height={800}  	loading="lazy" src={"/bg-street.jpg"} alt='street-image' className=' object-cover h-full'/>
+        <Image width={600} height={800} loading="lazy" src={"/bg-street.jpg"} alt='street-image' className=' object-cover h-full'/>
       </div>
       <div className="relative w-full h-full max-md:w-full p-10 bg-slate-900 flex flex-col justify-center">
         {statusForm

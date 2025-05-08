@@ -19,6 +19,7 @@ export interface Users {
   email: string
   follow: number
 }
+
 export default function Page() {
   const [myPost, setMyPost] = useState<MyPost[]>()
   const { authTokens, isLoggedIn } = useAuthContext()
@@ -26,27 +27,13 @@ export default function Page() {
   const [visible, setVisible] = useState<boolean>(false);
   const [loadingMyPost, setLoadingMyPost] = useState<boolean>(false);
 
-  const toggleVisible = () => {
-    const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 300) {
-      setVisible(true);
-    } else if (scrolled <= 300) {
-      setVisible(false);
-    }
-  };
-
   useEffect(() => {
     if (authTokens?.idUser != null) {
       fetchPostUser();
     }
     setUserState(isLoggedIn);
-    window.addEventListener("scroll", toggleVisible);
-  
-    return () => {
-      window.removeEventListener("scroll", toggleVisible);
-    };
-  
-  }, [isLoggedIn]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchPostUser = async () =>{
     setLoadingMyPost(true)

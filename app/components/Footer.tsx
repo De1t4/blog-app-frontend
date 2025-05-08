@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
-    <div className=' bg-slate-950 px-8 text-gold flex flex-col justify-center items-center py-8'>
+    <footer className=' bg-slate-950 px-8 text-gold flex flex-col justify-center items-center py-8'>
       <ul className='flex gap-8 font-semibold'>
         <li className=' cursor-pointer duration-300 transition-all hover:scale-105'>Acerca de</li>
         <li className=' cursor-pointer duration-300 transition-all hover:scale-105'>Ayuda</li>
@@ -16,7 +16,7 @@ const Footer = () => {
         <FaInstagram className=' hover:scale-105 transition-all duration-300 cursor-pointer'/>
       </div>
       <p className='mt-2'>© Derechos Reservados <a href='https://www.linkedin.com/in/mauricio-chambi-7a90b724a/' className=' font-semibold underline'>Mauricio Chambi</a></p>
-    </div>
+    </footer>
   );
 }
 

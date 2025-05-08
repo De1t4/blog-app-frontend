@@ -1,12 +1,5 @@
-import Link from 'next/link'
 import React from 'react'
 import { CommentUser, PostUser, UserProfile } from '../interface/models'
-import { AuthTokens } from '../../contexts/authContext'
-import { Comment } from '../Profile/components/comment'
-import { Post } from '../Profile/components/post'
-import ContainPost from '../Profile/components/containPost'
-import { ContainComment } from '../Profile/components/containComment'
-import { ProfileUser } from '../Profile/components/profileUser'
 import { Card, CardBody, Divider, Tab, Tabs } from '@nextui-org/react'
 
 interface InfoUserProps {
@@ -23,6 +16,9 @@ export const InfoUser: React.FC<InfoUserProps> = ({ comments, posts }) => {
             <Card>
               <CardBody>
                 <li className=' list-none gap-y-2 flex flex-col'>
+                  {comments.length === 0 &&
+                    <p className='text-center'>No tienes comentarios</p>
+                  }
                   {comments.map((comment) => (
                     <ol key={comment.id_comment}>{comment.comment}</ol>
                   ))
@@ -35,6 +31,9 @@ export const InfoUser: React.FC<InfoUserProps> = ({ comments, posts }) => {
             <Card>
               <CardBody>
                 <li className=' list-none gap-y-2 flex flex-col'>
+                  {posts.length === 0 &&
+                    <p className='text-center'>No tienes posteos</p>
+                  }
                   {posts.map((post) => (
                     <ol key={post.id_posts} className='flex'>
                       <span>{post.title}</span>
