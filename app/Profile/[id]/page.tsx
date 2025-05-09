@@ -3,16 +3,16 @@ import axios from "axios";
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useAuthContext } from "../../../contexts/authContext";
-import { Jakarta } from "../../services/fetchApi";
-import { UserProfile } from "../../interface/models";
-import { BounceLoader, GridLoader } from "react-spinners";
+import { type UserProfile } from "../../interface/models";
+import { BounceLoader } from "react-spinners";
 import { InfoUser } from "../../components/UserProfile";
 import { ProfileUser } from "../components/profileUser";
 
 
 export default function Page() {
   const { id } = useParams()
-  const [dataUser, setDataUser] = useState<UserProfile>()
+  const [data, setData] = useState<UserProfile | null>(null)
+  const [dataUser, setDataUser] = useState<UserProfile | null>(null)
   const { authTokens } = useAuthContext()
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -25,6 +25,8 @@ export default function Page() {
       } catch {
         console.log("error")
         setLoading(false)
+      }finally{
+        setLoading(true)
       }
 
     }
